@@ -1,51 +1,93 @@
 ﻿#include <iostream>
-#include "io.h"
 #include <Windows.h>
+#include <iomanip>
 
-double vysota();
+void matriz_create(int** matriz, const int line, const int column);
+void matriz_print(int** matriz, const int line, const int column);
+bool sumetria(int** matriz, const int line, const int column);
 
-void obchbslenna(int hmax);
-
-int main()
+int main(void)
 {
+	srand((unsigned)time(NULL));
+
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	double h;
-	h = vysota();
+	using std::cout;
+	using std::endl;
+	using std::cin;
 
-	obchbslenna(h);
+	int line;
+	int column;
+
+	cout << "Задайте розмір матриці: " << endl;
+	cout << endl;
+	cout << "Кількість рядків: ";
+	cin >> line;
+	cout << endl;
+	cout << "Кількість стовпців: ";
+	cin >> column;
+	cout << endl;
+
+	int** matriz = new int* [line];
+	for (int index = 0; index < line; index++)
+		matriz[index] = new int[column];
+
+	matriz_create(matriz, line, column);
+	cout << "Сформований масив: " << endl;
+	matriz_print(matriz, line, column);
+
+	bool l = sumetria(matriz, line, column);
+	if (l == true)
+		cout << "Матриця симетрична відносно головної діагоналі";
+	else
+		cout << "Матриця не симетрична відносно головної діагоналі";
 
 	return 0;
 }
 
-double vysota()
+void matriz_create(int** matriz, const int line, const int column)
 {
-	std::cout << "Введіть висоту вежі з якої буде падати мячик: ";
-	double h;
-	std::cin >> h;
-
-	return h;
+	using std::cout;
+	using std::endl;
+	using std::cin;
+	for (int index = 0; index < line; index++)
+	{
+		for (int index_j = 0; index_j < column; index_j++)
+		{
+			cout << "a[" << index << "][" << index_j << "] = ";
+			cin >> matriz[index][index_j];
+		}
+		cout << endl;
+	}
 }
 
-void obchbslenna(int hmax)
+
+void matriz_print(int** matriz, const int line, const int column)
 {
-	int t;
+	using std::cout;
+	using std::endl;
+	cout << endl;
+	for (int index = 0; index < line; index++)
+	{
+		for (int index_j = 0; index_j < column; index_j++)
+			cout << std::setw(4) << matriz[index][index_j];
+		cout << endl;
+	}
+	cout << endl;
+}
 
-	t = 1;
-	double hzmina = (myConstants::g * t * t * 1.) / (2);
-	std::cout << "Пройшло 0 секунд, висота мячика над землею становить: " << hzmina << std::endl;
-	t = 2;
-	double hzmina = (myConstants::g * t * t * 1.) / (2);
-	std::cout << "Пройшло 0 секунд, висота мячика над землею становить: " << hzmina << std::endl;
-	t = 3;
-	double hzmina = (myConstants::g * t * t * 1.) / (2);
-	std::cout << "Пройшло 0 секунд, висота мячика над землею становить: " << hzmina << std::endl;
-	t = 4;
-	double hzmina = (myConstants::g * t * t * 1.) / (2);
-	std::cout << "Пройшло 0 секунд, висота мячика над землею становить: " << hzmina << std::endl;
-	t = 5;
-	double hzmina = (myConstants::g * t * t * 1.) / (2);
-	std::cout << "Пройшло 0 секунд, висота мячика над землею становить: " << hzmina << std::endl;
-
+bool sumetria(int** matriz, const int line, const int column)
+{
+	for (int index = 0; index < line; index++)
+	{
+		for (int index_j = 0; index_j < column; index_j++)
+		{
+			if ((matriz[index][index_j] == matriz[index_j][index]) && (index == line - 1))
+				return true;
+			else
+				if(matriz[index][index_j] != matriz[index_j][index])
+				return false;
+		}
+	}
 }

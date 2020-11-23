@@ -144,7 +144,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="111.cpp" />
-    <ClCompile Include="io.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="io.h" />
